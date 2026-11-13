@@ -26,9 +26,14 @@ jobs:
       # 可信发布需要 npm 11.5.1+（pnpm publish 最终调用 npm 发布）
       - run: npm install -g npm@latest
       - run: pnpm install --frozen-lockfile
+      # 版本 PR 的提交以作者身份提交，避免 github-actions[bot] 出现在贡献者中
+      - run: |
+          git config user.name "蒋杰"
+          git config user.email "1126651826@qq.com"
       # 有待发布的 changeset 时创建「Version Packages」PR；该 PR 合并后自动发布到 npm
       - uses: changesets/action@v1
         with:
+          setupGitUser: false
           version: pnpm run version-packages
           publish: pnpm release
         env:
