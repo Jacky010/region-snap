@@ -8,6 +8,8 @@ English | [简体中文](./README.zh-CN.md)
 
 Drag to select any region of a web page and capture it as an image. Framework-agnostic core, with Vue 3 and React components.
 
+**Website & live demo: <https://jacky010.github.io/region-snap-website/>**
+
 - **Any DOM content** – text, images, `<canvas>` (e.g. PDF pages rendered by pdf.js), tables…
 - **Fast & sharp** – only the selected area is rendered, at `devicePixelRatio`; regions that fall entirely inside a single `<img>` / `<canvas>` are cropped straight from the source at native resolution
 - **Works in real layouts** – scroll containers, auto-scroll while dragging near the edge, CSS `transform: scale()` zoom, re-layout on resize

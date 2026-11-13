@@ -8,6 +8,8 @@
 
 在网页上拖动框选任意区域并截图。核心逻辑与框架无关，同时提供 Vue 3 和 React 组件。
 
+**官网与在线演示：<https://jacky010.github.io/region-snap-website/>**
+
 - **框选任意 DOM 内容**：文字、图片、`<canvas>`（如 pdf.js 渲染的 PDF 页）、表格……
 - **快且清晰**：只渲染选中区域，按 `devicePixelRatio` 输出；选区完全落在单个 `<img>` / `<canvas>` 上时直接从源图按原始分辨率裁剪
 - **适应真实布局**：滚动容器、拖到边缘自动滚动、CSS `transform: scale()` 缩放、内容重新排版
