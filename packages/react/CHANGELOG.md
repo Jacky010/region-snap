@@ -1,5 +1,13 @@
 # @region-snap/react
 
+## 0.1.2
+
+### Patch Changes
+
+- 1453ddc: docs: add website link (https://jacky010.github.io/region-snap-website/)
+- Updated dependencies [1453ddc]
+  - @region-snap/core@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@region-snap/react",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Drag to select any region of a web page and capture it as an image. React component.",
   "type": "module",
   "main": "./dist/index.cjs",

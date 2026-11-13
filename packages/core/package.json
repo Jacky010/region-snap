@@ -1,6 +1,6 @@
 {
   "name": "@region-snap/core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Drag to select any region of a web page and capture it as an image. Framework-agnostic core.",
   "type": "module",
   "main": "./dist/index.cjs",
