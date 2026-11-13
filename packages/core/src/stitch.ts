@@ -8,10 +8,17 @@ const MATCH_THRESHOLD = 10
 const QUICK_THRESHOLD = 2
 /** 有内容的行：行内亮度差超过该值（纯色背景行不参与比对，否则任何偏移都能匹配） */
 const CONTENT_ROW_CONTRAST = 16
+/**
+ * 可比对的内容行少于该值时不比对。不能太大：对齐时两帧的内容行重合、行数最少，
+ * 重叠部分内容稀疏（页间空白、居中的短标题）时会把正确的偏移排除掉
+ */
+const MIN_CONTENT_ROWS = 8
 const COARSE_ROW_STEP = 6
 const REFINE_CANDIDATES = 5
 /** 最佳偏移的差异要低于次佳（不相邻）偏移的这个比例才算可信 */
 const DISTINCT_RATIO = 0.5
+/** 多个偏移难以区分时，上一次的偏移比最佳偏移差不超过该值就采用它 */
+const HINT_TOLERANCE = 1
 
 export interface Frame {
   height: number
@@ -53,7 +60,7 @@ function difference(prev: Frame, cur: Frame, offset: number, step: number) {
     for (let col = 0; col < SAMPLE_COLUMNS; col++) sum += Math.abs(cur.luma[a + col] - prev.luma[b + col])
     rows++
   }
-  return rows >= Math.max(3, 24 / step) ? sum / (rows * SAMPLE_COLUMNS) : NaN
+  return rows >= Math.max(2, Math.ceil(MIN_CONTENT_ROWS / step)) ? sum / (rows * SAMPLE_COLUMNS) : NaN
 }
 
 /**
@@ -83,9 +90,15 @@ export function findOffset(prev: Frame, cur: Frame, hint = 0): number | 'lost' |
   }
   if (!best || best.cost >= MATCH_THRESHOLD) return 'lost'
 
-  // 最佳偏移要明显优于其他（不相邻的）偏移，否则可能是滚动中途取到的帧或重复的内容，跳过这一帧
+  // 最佳偏移要明显优于其他（不相邻的）偏移，否则可能是滚动中途取到的帧或重复的内容
   const bestCoarse = coarse.find((c) => c.offset === best!.offset)?.cost ?? coarse[0].cost
   const rival = coarse.find((c) => Math.abs(c.offset - best!.offset) > 2)
-  if (rival && bestCoarse > rival.cost * DISTINCT_RATIO) return 'unknown'
-  return best.offset
+  if (!rival || bestCoarse <= rival.cost * DISTINCT_RATIO) return best.offset
+
+  // 难以区分时，滚轮每次滚动的距离固定，上一次的偏移同样匹配得好就采用它，否则跳过这一帧
+  if (hint) {
+    const hintCost = difference(prev, cur, hint, 1)
+    if (hintCost < MATCH_THRESHOLD && hintCost <= best.cost + HINT_TOLERANCE) return hint
+  }
+  return 'unknown'
 }
