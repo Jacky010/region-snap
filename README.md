@@ -364,7 +364,7 @@ Versioning uses [changesets](https://github.com/changesets/changesets); all thre
 
 1. Run `pnpm changeset` in your PR and describe the change;
 2. After merging, the Release workflow opens a "Version Packages" PR;
-3. Merging that PR publishes to npm (requires an `NPM_TOKEN` repository secret).
+3. Merging that PR publishes to npm via Trusted Publishing – no token needed (each package must list `Jacky010/region-snap` / `release.yml` as a Trusted Publisher in its npm settings).
 
 To publish manually: `pnpm version-packages && pnpm release`.
 

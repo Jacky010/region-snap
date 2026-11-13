@@ -364,7 +364,7 @@ pnpm build      # 构建所有包
 
 1. 在 PR 中执行 `pnpm changeset`，描述本次改动；
 2. 合并后 Release 工作流会自动创建「Version Packages」PR；
-3. 合并该 PR 即发布到 npm（需要在仓库 Secrets 中配置 `NPM_TOKEN`）。
+3. 合并该 PR 即通过 npm 可信发布（Trusted Publishing）发布到 npm，无需 token（需要在三个包的 npm 设置中把 `Jacky010/region-snap` 的 `release.yml` 登记为 Trusted Publisher）。
 
 手动发布：`pnpm version-packages && pnpm release`。
 
