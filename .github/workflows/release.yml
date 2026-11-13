@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      - run: pnpm install --frozen-lockfile
+      # 未配置 NPM_TOKEN 时跳过发布，避免每次推送都失败
+      - id: token
+        run: echo "ok=${{ secrets.NPM_TOKEN != '' }}" >> "$GITHUB_OUTPUT"
+      # 有待发布的 changeset 时创建「Version Packages」PR；该 PR 合并后自动发布到 npm
+      - uses: changesets/action@v1
+        if: steps.token.outputs.ok == 'true'
+        with:
+          version: pnpm run version-packages
+          publish: pnpm release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true

@@ -1,0 +1,38 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, 'Microsoft YaHei', sans-serif; color: #303133; background: #f5f7fa; }
+
+.demo { display: flex; gap: 16px; height: 100vh; padding: 16px; }
+.demo-main { display: flex; flex: 1; flex-direction: column; min-width: 0; }
+.demo-tip { margin-bottom: 8px; color: #606266; font-size: 14px; }
+.demo-stage { flex: 1; min-height: 0; overflow: clip; }
+.demo-viewer { height: 100%; background: #fff; border: 1px solid #dcdfe6; border-radius: 4px; }
+.region-value { display: block; margin-bottom: 8px; font-size: 12px; word-break: break-all; color: #606266; }
+.actions { display: flex; gap: 8px; }
+.field select { width: 96px; }
+.demo-side { display: flex; flex-direction: column; gap: 12px; width: 380px; overflow: auto; }
+
+.panel { padding: 12px 16px; background: #fff; border: 1px solid #dcdfe6; border-radius: 4px; }
+.panel h3 { display: flex; align-items: center; justify-content: space-between; margin: 0 0 10px; font-size: 15px; }
+.panel .meta { color: #909399; font-size: 12px; font-weight: normal; }
+.field { display: flex; align-items: center; justify-content: space-between; margin: 6px 0; font-size: 13px; }
+.field input[type='number'] { width: 90px; }
+
+.preview { display: flex; align-items: center; justify-content: center; min-height: 120px; padding: 8px; background: repeating-conic-gradient(#f0f0f0 0 25%, #fff 0 50%) 0 0 / 16px 16px; }
+.preview img { max-width: 100%; max-height: 300px; border: 1px solid #dcdfe6; }
+.preview .placeholder { color: #c0c4cc; font-size: 13px; }
+.logs { max-height: 200px; overflow: auto; font-family: monospace; font-size: 12px; line-height: 1.7; color: #606266; }
+
+.btn { padding: 4px 12px; font-size: 12px; color: #606266; cursor: pointer; background: #fff; border: 1px solid #dcdfe6; border-radius: 3px; }
+.btn:disabled { cursor: wait; opacity: 0.6; }
+.btn-primary { color: #fff; background: #409eff; border-color: #409eff; }
+.btn-link { padding: 0; color: #409eff; border: none; }
+
+.paper { padding: 24px 40px; font-size: 15px; line-height: 1.9; }
+.paper p { margin: 0; }
+.paper-title { margin: 0; text-align: center; }
+.paper-sub { margin-bottom: 16px !important; color: #909399; text-align: center; }
+.question { margin-bottom: 18px; }
+.options { padding-left: 20px; }
+.chart { display: block; margin: 8px 0 18px; border: 1px solid #ebeef5; }
+.table { margin: 8px 0 18px; border-collapse: collapse; }
+.table th, .table td { padding: 4px 16px; text-align: center; border: 1px solid #909399; }
